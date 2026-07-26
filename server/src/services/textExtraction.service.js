@@ -21,7 +21,17 @@ export const extractFile = async (file) => {
           throw error;
         }
 
-        return result.text.trim();
+        const text = result.text.trim();
+
+        if (text.length < 100) {
+          const error = new Error(
+            "The uploaded document contains too little text.",
+          );
+          error.statusCode = 400;
+          throw error;
+        }
+
+        return text;
       }
 
       case "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {
@@ -30,10 +40,22 @@ export const extractFile = async (file) => {
         });
 
         if (!value.trim()) {
-          throw new Error("No text found in the DOCX.");
+          const error = new Error("No text found in the DOCX.");
+          error.statusCode = 400;
+          throw error;
         }
 
-        return value.trim();
+        const text = value.trim();
+
+        if (text.length < 100) {
+          const error = new Error(
+            "The uploaded document contains too little text.",
+          );
+          error.statusCode = 400;
+          throw error;
+        }
+
+        return text;
       }
 
       default: {

@@ -9,7 +9,6 @@ import { ProjectSchema } from "./project.schema.js";
 import { CertificationSchema } from "./certification.schema.js";
 import { AchievementSchema } from "./achievement.schema.js";
 
-
 const SocialLinksSchema = z.object({
   linkedin: z.string(),
   github: z.string(),
@@ -21,7 +20,6 @@ const SocialLinksSchema = z.object({
   dribbble: z.string(),
   stackoverflow: z.string(),
 });
-
 
 export const ResumeSchema = z.object({
   personalInfo: PersonalInfoSchema,
@@ -45,6 +43,5 @@ export const ResumeSchema = z.object({
   languages: z.array(z.string()),
 
   socialLinks: SocialLinksSchema,
+
 });
-
-

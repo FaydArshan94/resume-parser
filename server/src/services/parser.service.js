@@ -7,15 +7,17 @@ export const parseResume = async (resumeText) => {
   const prompt = `
 You are an expert resume parser.
 
-Extract all information from the resume.
+Your first task is to determine whether the provided document is a resume or CV.
 
 Rules:
-- Return only valid JSON.
+- If the document IS a resume or CV, set "isResume" to true and extract all information.
+- If the document is NOT a resume or CV, set "isResume" to false and leave every other field empty.
+- Return ONLY valid JSON matching the provided schema.
 - Do not invent information.
 - If a field is missing, return an empty string, empty array, or empty object as appropriate.
 - Preserve the original wording whenever possible.
 
-Resume:
+Document:
 
 ${resumeText}
 `;
@@ -29,12 +31,25 @@ ${resumeText}
     },
   });
 
- const parsed = JSON.parse(response.text);
+  const parsed = JSON.parse(response.text);
 
+  if (typeof parsed.isResume !== "boolean") {
+    const error = new Error(
+      "Unable to determine whether the uploaded document is a resume.",
+    );
+    error.statusCode = 400;
+    throw error;
+  }
 
-const normalizedResume = normalizeResume(parsed);
+  if (!parsed.isResume) {
+    const error = new Error("The uploaded document is not a valid resume.");
+    error.statusCode = 400;
+    throw error;
+  }
 
-const validatedResume = ResumeSchema.parse(normalizedResume);
+  const { isResume, ...resumeData } = parsed;
 
-return validatedResume;
+  const normalizedResume = normalizeResume(resumeData);
+
+  return ResumeSchema.parse(normalizedResume);
 };

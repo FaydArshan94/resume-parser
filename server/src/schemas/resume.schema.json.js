@@ -3,36 +3,35 @@ export const PersonalInfoSchema = {
   properties: {
     fullName: {
       type: "string",
-      description: "Candidate's full name"
+      description: "Candidate's full name",
     },
     email: {
       type: "string",
-      description: "Primary email address"
+      description: "Primary email address",
     },
     phone: {
       type: "string",
-      description: "Primary phone number"
+      description: "Primary phone number",
     },
     location: {
       type: "string",
-      description: "City, State or Country"
-    }
+      description: "City, State or Country",
+    },
   },
-  required: []
+  required: [],
 };
-
 
 export const ProfessionSchema = {
   type: "object",
   properties: {
     currentDesignation: {
-      type: "string"
+      type: "string",
     },
     targetRole: {
-      type: "string"
+      type: "string",
     },
     industry: {
-      type: "string"
+      type: "string",
     },
     experienceLevel: {
       type: "string",
@@ -44,186 +43,182 @@ export const ProfessionSchema = {
         "Senior",
         "Lead",
         "Manager",
-        "Executive"
-      ]
-    }
+        "Executive",
+      ],
+    },
   },
-  required: []
+  required: [],
 };
 
 export const SkillsSchema = {
   type: "array",
   description: "List of all skills mentioned in the resume",
   items: {
-    type: "string"
-  }
+    type: "string",
+  },
 };
-
 
 export const ExperienceSchema = {
   type: "object",
   properties: {
     company: {
-      type: "string"
+      type: "string",
     },
     designation: {
-      type: "string"
+      type: "string",
     },
     employmentType: {
-      type: "string"
+      type: "string",
     },
     location: {
-      type: "string"
+      type: "string",
     },
     startDate: {
-      type: "string"
+      type: "string",
     },
     endDate: {
-      type: "string"
+      type: "string",
     },
     isCurrent: {
-      type: "boolean"
+      type: "boolean",
     },
     description: {
-      type: "string"
-    }
+      type: "string",
+    },
   },
-  required: []
+  required: [],
 };
-
-
 
 export const EducationSchema = {
   type: "object",
   properties: {
     institution: {
-      type: "string"
+      type: "string",
     },
     degree: {
-      type: "string"
+      type: "string",
     },
     field: {
-      type: "string"
+      type: "string",
     },
     startYear: {
-      type: "string"
+      type: "string",
     },
     endYear: {
-      type: "string"
+      type: "string",
     },
     grade: {
-      type: "string"
-    }
+      type: "string",
+    },
   },
-  required: []
+  required: [],
 };
 
 export const ProjectSchema = {
   type: "object",
   properties: {
     title: {
-      type: "string"
+      type: "string",
     },
     description: {
-      type: "string"
+      type: "string",
     },
     technologies: {
       type: "array",
       items: {
-        type: "string"
-      }
+        type: "string",
+      },
     },
     url: {
-      type: "string"
-    }
+      type: "string",
+    },
   },
-  required: []
+  required: [],
 };
-
 
 export const CertificationSchema = {
   type: "object",
   properties: {
     name: {
-      type: "string"
+      type: "string",
     },
     issuer: {
-      type: "string"
+      type: "string",
     },
     issueDate: {
-      type: "string"
-    }
+      type: "string",
+    },
   },
-  required: []
+  required: [],
 };
-
 
 export const AchievementSchema = {
   type: "object",
   properties: {
     title: {
-      type: "string"
+      type: "string",
     },
     description: {
-      type: "string"
-    }
+      type: "string",
+    },
   },
-  required: []
+  required: [],
 };
-
 
 export const LanguageSchema = {
   type: "array",
   items: {
-    type: "string"
-  }
+    type: "string",
+  },
 };
-
 
 export const SocialLinksSchema = {
   type: "object",
   properties: {
     linkedin: {
-      type: "string"
+      type: "string",
     },
     github: {
-      type: "string"
+      type: "string",
     },
     portfolio: {
-      type: "string"
+      type: "string",
     },
     website: {
-      type: "string"
+      type: "string",
     },
     leetcode: {
-      type: "string"
+      type: "string",
     },
     kaggle: {
-      type: "string"
+      type: "string",
     },
     behance: {
-      type: "string"
+      type: "string",
     },
     dribbble: {
-      type: "string"
+      type: "string",
     },
     stackoverflow: {
-      type: "string"
-    }
+      type: "string",
+    },
   },
-  required: []
+  required: [],
 };
-
 
 export const ResumeJsonSchema = {
   type: "object",
 
   properties: {
+    isResume: {
+      type: "boolean",
+      description: "Whether the uploaded document is a resume or CV.",
+    },
     personalInfo: PersonalInfoSchema,
 
     summary: {
       type: "string",
-      description: "Professional summary or objective"
+      description: "Professional summary or objective",
     },
 
     profession: ProfessionSchema,
@@ -232,33 +227,46 @@ export const ResumeJsonSchema = {
 
     experience: {
       type: "array",
-      items: ExperienceSchema
+      items: ExperienceSchema,
     },
 
     education: {
       type: "array",
-      items: EducationSchema
+      items: EducationSchema,
     },
 
     projects: {
       type: "array",
-      items: ProjectSchema
+      items: ProjectSchema,
     },
 
     certifications: {
       type: "array",
-      items: CertificationSchema
+      items: CertificationSchema,
     },
 
     achievements: {
       type: "array",
-      items: AchievementSchema
+      items: AchievementSchema,
     },
 
     languages: LanguageSchema,
 
-    socialLinks: SocialLinksSchema
+    socialLinks: SocialLinksSchema,
   },
 
-  required: []
+  required: [
+    "isResume",
+    "personalInfo",
+    "summary",
+    "profession",
+    "skills",
+    "experience",
+    "education",
+    "projects",
+    "certifications",
+    "achievements",
+    "languages",
+    "socialLinks",
+  ],
 };
