@@ -1,0 +1,52 @@
+import { PDFParse } from "pdf-parse";
+import mammoth from "mammoth";
+
+export const extractFile = async (file) => {
+  if (!file) {
+    const error = new Error("No file provided.");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  try {
+    switch (file.mimetype) {
+      case "application/pdf": {
+        const parser = new PDFParse(new Uint8Array(file.buffer));
+
+        const result = await parser.getText();
+
+        if (!result.text.trim()) {
+          const error = new Error("No text found in the PDF.");
+          error.statusCode = 400;
+          throw error;
+        }
+
+        return result.text.trim();
+      }
+
+      case "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {
+        const { value } = await mammoth.extractRawText({
+          buffer: file.buffer,
+        });
+
+        if (!value.trim()) {
+          throw new Error("No text found in the DOCX.");
+        }
+
+        return value.trim();
+      }
+
+      default: {
+        const error = new Error("Unsupported file type.");
+        error.statusCode = 400;
+        throw error;
+      }
+    }
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+
+    throw err;
+  }
+};
