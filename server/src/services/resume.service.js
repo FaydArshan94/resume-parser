@@ -1,5 +1,6 @@
 import { parseResume } from "./parser.service.js";
 import { extractFile } from "./textExtraction.service.js";
+import { Resume } from "../models/resume.model.js";
 
 export const processResume = async (file) => {
   if (!file) {
@@ -10,8 +11,13 @@ export const processResume = async (file) => {
 
   const extractedText = await extractFile(file);
 
-
   const parsedResume = await parseResume(extractedText);
 
-  return parsedResume;
+  const savedResume = await Resume.create({
+    originalFileName: file.originalname,
+    mimeType: file.mimetype,
+    fileSize: file.size,
+    parsedData: parsedResume,
+  });
+  return savedResume;
 };

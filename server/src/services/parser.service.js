@@ -31,7 +31,6 @@ ${resumeText}
 
  const parsed = JSON.parse(response.text);
 
-  console.log(parsed)
 
 const normalizedResume = normalizeResume(parsed);
 
