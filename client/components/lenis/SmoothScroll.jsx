@@ -10,7 +10,7 @@ export default function SmoothScroll({ children }) {
       smoothWheel: true,
       wheelMultiplier: 0.9,
       touchMultiplier: 1.2,
-      infinite: false,
+      infinite: true,
     });
 
     let frame = 0;
