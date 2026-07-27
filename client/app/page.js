@@ -223,7 +223,7 @@ export default function Home() {
                     Total
                   </p>
                   <p className="mt-1 text-2xl font-bold text-white">
-                    {pastResumes.length}
+                    {pastResumes?.length}
                   </p>
                 </motion.div>
               </div>
