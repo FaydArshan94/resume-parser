@@ -1,6 +1,6 @@
 "use client";
 
-import { Award } from "lucide-react";
+import { Award, Trophy } from "lucide-react";
 import FadeInSection from "../ui/FadeInSection";
 
 export default function CertificationsCard({
@@ -97,7 +97,7 @@ export default function CertificationsCard({
                   boxShadow: "inset 0 1px 1px rgba(255,255,255,0.15)",
                 }}
               >
-                <Award className="text-white/60" size={22} />
+                <Trophy className="text-white/60" size={22} />
               </div>
 
               <div>
