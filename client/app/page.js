@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import UploadZone from "@/components/UploadZone";
-import ResultsView from "@/components/ResultsView";
-import ResumeList from "@/components/ResumeList";
+import UploadZone from "../components/UploadZone";
+import ResultsView from "../components/ResultsView";
+import ResumeList from "../components/ResumeList";
 import {
   parseResume,
   getResumeById,
@@ -12,6 +12,8 @@ import {
 } from "@/lib/api";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trash2 } from "lucide-react";
+import ConfirmModal from "../components/ui/ConfrimModal";
+import { ToastContainer } from "../components/ui/Toast";
 
 export default function Home() {
   const [status, setStatus] = useState("idle");
@@ -25,6 +27,22 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [pagination, setPagination] = useState(null);
   const [loadingMore, setLoadingMore] = useState(false);
+
+  const [toasts, setToasts] = useState([]);
+  const [confirmState, setConfirmState] = useState(null); // { type: 'single' | 'all', id? }
+
+  const pushToast = (message, type = "success") => {
+    const id = Date.now() + Math.random();
+    setToasts((prev) => [...prev, { id, message, type }]);
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 3200);
+  };
+
+  const dismissToast = (id) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
+
   // Spring physics configurations for that "cute & smooth" bounce
   const springTransition = {
     type: "spring",
@@ -122,12 +140,15 @@ export default function Home() {
         setStatus("success");
         setPage(1);
         loadResumeList(1);
+        pushToast("Resume parsed successfully.", "success");
       }, 500);
     } catch (err) {
       stopProgress();
 
-      setError(err.response?.data?.message || err.message);
+      const message = err.response?.data?.message || err.message;
+      setError(message);
       setStatus("error");
+      pushToast(message || "Failed to parse resume.", "error");
     }
   };
 
@@ -150,42 +171,54 @@ export default function Home() {
     setSelectedFile(null);
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteResume(id);
-      const confirmed = window.confirm("Delete this resume permanently?");
-
-      if (!confirmed) return;
-
-      setPastResumes((prev) => prev.filter((resume) => resume._id !== id));
-    } catch (err) {
-      console.error(err);
-    }
+  const handleDelete = (id) => {
+    setConfirmState({ type: "single", id });
   };
 
-  const handleDeleteAll = async () => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete all resumes? This action cannot be undone.",
-    );
+  const handleDeleteAll = () => {
+    if (pastResumes.length === 0) return;
+    setConfirmState({ type: "all" });
+  };
 
-    if (!confirmed) return;
+  const closeConfirm = () => setConfirmState(null);
 
-    try {
-      await deleteAllResumes();
+  const runConfirmedDelete = async () => {
+    if (!confirmState) return;
 
-      setPastResumes([]);
-      setPagination({
-        page: 1,
-        limit: 10,
-        total: 0,
-        totalPages: 0,
-        hasNextPage: false,
-        hasPrevPage: false,
-      });
-      setPage(1);
-    } catch (err) {
-      console.error(err);
+    if (confirmState.type === "single") {
+      const { id } = confirmState;
+      try {
+        await deleteResume(id);
+        setPastResumes((prev) => prev.filter((resume) => resume._id !== id));
+        setPagination((prev) =>
+          prev ? { ...prev, total: Math.max(0, prev.total - 1) } : prev,
+        );
+        pushToast("Resume deleted.", "success");
+      } catch (err) {
+        pushToast(err.message || "Failed to delete resume.", "error");
+      }
     }
+
+    if (confirmState.type === "all") {
+      try {
+        await deleteAllResumes();
+        setPastResumes([]);
+        setPagination({
+          page: 1,
+          limit: 10,
+          total: 0,
+          totalPages: 0,
+          hasNextPage: false,
+          hasPrevPage: false,
+        });
+        setPage(1);
+        pushToast("All resumes deleted.", "success");
+      } catch (err) {
+        pushToast(err.message || "Failed to delete resumes.", "error");
+      }
+    }
+
+    setConfirmState(null);
   };
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0F1115] text-white">
@@ -394,6 +427,26 @@ export default function Home() {
           </div>
         )}
       </AnimatePresence>
+
+      <ConfirmModal
+        open={!!confirmState}
+        title={
+          confirmState?.type === "all"
+            ? "Delete all resumes?"
+            : "Delete this resume?"
+        }
+        description={
+          confirmState?.type === "all"
+            ? "This will permanently remove every parsed resume from your database. This action cannot be undone."
+            : "This will permanently remove this candidate's parsed data. This action cannot be undone."
+        }
+        confirmLabel="Delete"
+        danger
+        onConfirm={runConfirmedDelete}
+        onCancel={closeConfirm}
+      />
+
+      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
     </main>
   );
 }

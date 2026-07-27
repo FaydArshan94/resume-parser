@@ -30,7 +30,7 @@ export default function ResultsView({ data, onBack }) {
     achievements = [],
   } = data;
 
-  console.log(data);
+
 
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 text-[#F5F3EE]">

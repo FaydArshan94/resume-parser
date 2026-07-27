@@ -1,12 +1,67 @@
 "use client";
 
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Calendar, Briefcase, User, Trash2 } from "lucide-react";
+import { ArrowUpRight, Calendar, Briefcase, User, Trash2, Search, X } from "lucide-react";
 
 export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll }) {
+  const [query, setQuery] = useState("");
+
+  const filteredResumes = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return resumes;
+
+    return resumes.filter((resume) => {
+      const person = resume.parsedData?.personalInfo || {};
+      const profession = resume.parsedData?.profession || {};
+
+      const haystack = [
+        person.fullName,
+        profession.currentDesignation,
+        profession.targetRole,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return haystack.includes(q);
+    });
+  }, [resumes, query]);
+
   return (
-    <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-      {resumes.map((resume, index) => {
+    <div>
+      {/* Search bar */}
+      <div className="mb-6 flex items-center gap-3 rounded-2xl border border-white/10 bg-[#171C23] px-4 py-3 focus-within:border-[#4A6FA5]/50 transition-colors">
+        <Search size={16} className="text-zinc-500 shrink-0" />
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search candidates by name or role..."
+          className="flex-1 bg-transparent text-sm text-white placeholder:text-zinc-500 outline-none"
+        />
+        {query && (
+          <button
+            onClick={() => setQuery("")}
+            className="shrink-0 rounded-md p-1 text-zinc-500 hover:text-white hover:bg-white/5 transition"
+          >
+            <X size={14} />
+          </button>
+        )}
+      </div>
+
+      {query && (
+        <p className="mb-4 text-xs text-zinc-500">
+          {filteredResumes.length} result{filteredResumes.length !== 1 ? "s" : ""} for "{query}"
+        </p>
+      )}
+
+      {filteredResumes.length === 0 ? (
+        <div className="rounded-3xl border border-dashed border-white/10 bg-[#161B22]/50 p-12 text-center">
+          <p className="text-zinc-400">No candidates match "{query}".</p>
+        </div>
+      ) : (
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {filteredResumes.map((resume, index) => {
         const person = resume.parsedData?.personalInfo || {};
         const profession = resume.parsedData?.profession || {};
 
@@ -128,7 +183,9 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
             </div>
           </motion.button>
         );
-      })}
+          })}
+        </div>
+      )}
     </div>
   );
 }
