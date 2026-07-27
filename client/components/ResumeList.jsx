@@ -64,7 +64,7 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
 
       {filteredResumes.length === 0 ? (
         <div
-          className="rounded-3xl border border-dashed border-white/[0.12] p-12 text-center"
+          className="rounded-3xl border border-dashed border-white/12p-12 text-center"
           style={{
             background:
               "linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25))",
@@ -103,7 +103,7 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
           >
             {/* Glow */}
 
-            <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br from-white/[0.04] to-transparent" />
+            <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-linear-to-br from-white/4 to-transparent" />
 
             {/* Header */}
 
@@ -153,7 +153,7 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
 
             {/* Divider */}
 
-            <div className="my-5 h-px bg-white/[0.08]" />
+            <div className="my-5 h-px bg-white/8" />
 
             {/* Info */}
 

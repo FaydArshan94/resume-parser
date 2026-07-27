@@ -221,8 +221,8 @@ export default function Home() {
 
       {/* Background Glow */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-white/[0.04] blur-[140px]" />
-        <div className="absolute bottom-0 right-0 h-[350px] w-[350px] rounded-full bg-white/[0.03] blur-[120px]" />
+        <div className="absolute left-1/2 top-0 h-125 w-125 -translate-x-1/2 rounded-full bg-white/4 blur-[140px]" />
+        <div className="absolute bottom-0 right-0 h-87.5 w-87.5 rounded-full bg-white/3 blur-[120px]" />
       </div>
 
       <AnimatePresence mode="wait">
@@ -255,7 +255,7 @@ export default function Home() {
               >
                 Turn resumes into
                 <br />
-                <span className="bg-gradient-to-r from-white via-zinc-300 to-zinc-500 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-white via-zinc-300 to-zinc-500 bg-clip-text text-transparent">
                   structured candidate data
                 </span>
               </motion.h1>
@@ -285,7 +285,7 @@ export default function Home() {
               variants={scaleIn}
               whileHover={{ y: -4 }}
               transition={{ duration: 0.3 }}
-              className="rounded-[32px] p-[1px]"
+              className="rounded-4xl p-px"
               style={{
                 background:
                   "linear-gradient(155deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02) 30%, rgba(255,255,255,0.06) 70%, rgba(255,255,255,0.14))",
@@ -419,7 +419,7 @@ export default function Home() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={springTransition}
-                  className="rounded-3xl border border-dashed border-white/[0.12] p-16 text-center"
+                  className="rounded-3xl border border-dashed border-white/12 p-16 text-center"
                   style={{
                     background:
                       "linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25))",

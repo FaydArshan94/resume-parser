@@ -89,7 +89,7 @@ export default function ProjectsGrid({ projects = [] }) {
                       href={project.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-lg p-2 text-zinc-400 transition hover:bg-white/[0.08] hover:text-white"
+                      className="rounded-lg p-2 text-zinc-400 transition hover:bg-white/8 hover:text-white"
                     >
                       <ExternalLink size={18} />
                     </a>

@@ -30,7 +30,7 @@ export default function JsonViewer({ data }) {
       >
         <button
           onClick={() => setOpen(!open)}
-          className="w-full flex items-center justify-between px-7 py-6 hover:bg-white/[0.03] transition"
+          className="w-full flex items-center justify-between px-7 py-6 hover:bg-white/3 transition"
         >
           <div className="flex items-center gap-4">
             <div
@@ -79,7 +79,7 @@ export default function JsonViewer({ data }) {
                   transition={{
                     duration: 0.3,
                   }}
-                  className="relative max-h-[550px] overflow-auto rounded-2xl scrollbar-none"
+                  className="relative max-h-137.5 overflow-auto rounded-2xl scrollbar-none"
                   style={{
                     background: "#0a0a0a",
                     border: "1px solid rgba(255,255,255,0.08)",

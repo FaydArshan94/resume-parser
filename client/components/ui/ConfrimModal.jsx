@@ -34,7 +34,7 @@ export default function ConfirmModal({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.97 }}
             transition={{ type: "spring", stiffness: 260, damping: 22 }}
-            className="relative w-full max-w-[400px] rounded-[20px] p-[1px]"
+            className="relative w-full max-w-100 rounded-[20px] p-px"
             style={{
               background:
                 "linear-gradient(155deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02) 40%, rgba(255,255,255,0.1))",

@@ -56,7 +56,7 @@ export default function ExperienceTimeline({ experience = [] }) {
                 {/* Timeline line */}
 
                 {index !== experience.length - 1 && (
-                  <div className="absolute left-[11px] top-6 h-full w-px bg-white/10" />
+                  <div className="absolute left-2.75 top-6 h-full w-px bg-white/10" />
                 )}
 
                 {/* Timeline dot */}

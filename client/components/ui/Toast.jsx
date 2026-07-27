@@ -16,7 +16,7 @@ const ACCENTS = {
 
 export function ToastContainer({ toasts, onDismiss }) {
   return (
-    <div className="fixed bottom-6 right-6 z-[60] flex flex-col gap-2.5 w-full max-w-[340px]">
+    <div className="fixed bottom-6 right-6 z-60 flex flex-col gap-2.5 w-full max-w-85">
       <AnimatePresence>
         {toasts.map((toast) => {
           const Icon = ICONS[toast.type] || Info;
