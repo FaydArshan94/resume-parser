@@ -1,5 +1,4 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
-import { successResponse } from "../utils/response.js";
 import { processResume } from "../services/resume.service.js";
 import { Resume } from "../models/resume.model.js";
 
@@ -19,70 +18,79 @@ export const uploadResume = asyncHandler(async (req, res) => {
   });
 });
 
-export const getResumeById = async (req, res) => {
-  try {
-    const { id } = req.params;
+export const getResumeById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
 
-    const resume = await Resume.findById(id).lean();
+  const resume = await Resume.findById(id).lean();
 
-    if (!resume) {
-      return res.status(404).json({
-        success: false,
-        error: "Resume not found",
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: "Resume fetched successfully",
-      data: resume,
-    });
-  } catch (error) {
-    console.error("Error fetching resume:", error);
-    return res.status(500).json({
-      success: false,
-      error: "Failed to fetch resume",
-    });
+  if (!resume) {
+    const error = new Error("Resume not found.");
+    error.statusCode = 404;
+    throw error;
   }
-};
 
-export const getAllResumes = async (req, res) => {
-  try {
-    const page = Math.max(1, Number(req.query.page) || 1);
-    const limit = Math.min(20, Math.max(1, Number(req.query.limit) || 10));
+  res.status(200).json({
+    success: true,
+    message: "Resume fetched successfully",
+    data: resume,
+  });
+});
 
-    const [resumes, total] = await Promise.all([
-      Resume.find()
-        .select(
-          "_id createdAt parsedData.personalInfo.fullName parsedData.profession.currentDesignation",
-        )
-        .sort({ createdAt: -1 })
-        .skip((page - 1) * limit)
-        .limit(limit)
-        .lean(),
+export const getAllResumes = asyncHandler(async (req, res) => {
+  const page = Math.max(1, Number(req.query.page) || 1);
+  const limit = Math.min(20, Math.max(1, Number(req.query.limit) || 10));
 
-      Resume.countDocuments(),
-    ]);
+  const [resumes, total] = await Promise.all([
+    Resume.find()
+      .select(
+        "_id createdAt parsedData.personalInfo.fullName parsedData.profession.currentDesignation"
+      )
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean(),
 
-    return res.status(200).json({
-      success: true,
-      message: "Resumes fetched successfully",
-      resumes,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-        hasNextPage: page < Math.ceil(total / limit),
-        hasPrevPage: page > 1,
-      },
-    });
-  } catch (error) {
-    console.error("Error fetching resumes:", error);
+    Resume.countDocuments(),
+  ]);
 
-    return res.status(500).json({
-      success: false,
-      message: "Failed to fetch resumes",
-    });
+  res.status(200).json({
+    success: true,
+    message: "Resumes fetched successfully",
+    resumes,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+      hasNextPage: page < Math.ceil(total / limit),
+      hasPrevPage: page > 1,
+    },
+  });
+});
+
+export const deleteResume = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const resume = await Resume.findByIdAndDelete(id);
+
+  if (!resume) {
+    const error = new Error("Resume not found.");
+    error.statusCode = 404;
+    throw error;
   }
-};
+
+  res.status(200).json({
+    success: true,
+    message: "Resume deleted successfully.",
+  });
+});
+
+export const deleteAllResume = asyncHandler(async (req, res) => {
+  const result = await Resume.deleteMany({});
+
+  res.status(200).json({
+    success: true,
+    message: `${result.deletedCount} resume(s) deleted successfully.`,
+    deletedCount: result.deletedCount,
+  });
+});

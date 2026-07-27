@@ -1,14 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  Calendar,
-  Briefcase,
-  User,
-} from "lucide-react";
+import { ArrowUpRight, Calendar, Briefcase, User, Trash2 } from "lucide-react";
 
-export default function ResumeList({ resumes, onSelect }) {
+export default function ResumeList({ resumes, onSelect, onDelete }) {
   return (
     <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
       {resumes.map((resume, index) => {
@@ -54,33 +49,40 @@ export default function ResumeList({ resumes, onSelect }) {
             {/* Header */}
 
             <div className="relative flex items-start justify-between">
-
               <div className="flex items-center gap-4">
-
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#4A6FA5]/15 text-[#4A6FA5]">
                   <User size={22} />
                 </div>
 
                 <div>
-
                   <h3 className="font-semibold text-white text-lg line-clamp-1">
                     {person.fullName || "Unknown Candidate"}
                   </h3>
 
                   <p className="mt-1 text-sm text-zinc-400 line-clamp-1">
-                    {profession.currentDesignation ||
-                      "No designation"}
+                    {profession.currentDesignation || "No designation"}
                   </p>
-
                 </div>
-
               </div>
 
-              <ArrowUpRight
-                size={18}
-                className="text-zinc-500 transition group-hover:text-[#4A6FA5] group-hover:translate-x-1 group-hover:-translate-y-1"
-              />
+              <div className="flex items-center">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete(r._id);
+                  }}
+                  className="p-2 rounded-lg text-zinc-500 hover:bg-red-500/10 hover:text-red-300 transition"
+                >
+                  <Trash2 size={16} />
+                </button>
 
+                <div className="p-2 rounded-lg text-zinc-500 hover:bg-blue-500/10 hover:text-blue-500 transition">
+                  <ArrowUpRight
+                    size={18}
+                    className=""
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Divider */}
@@ -90,47 +92,32 @@ export default function ResumeList({ resumes, onSelect }) {
             {/* Info */}
 
             <div className="relative space-y-3 text-sm">
-
               <div className="flex items-center gap-3 text-zinc-400">
-
-                <Briefcase
-                  size={15}
-                  className="text-[#4A6FA5]"
-                />
+                <Briefcase size={15} className="text-[#4A6FA5]" />
 
                 <span className="truncate">
                   {profession.targetRole ||
                     profession.currentDesignation ||
                     "No target role"}
                 </span>
-
               </div>
 
               <div className="flex items-center gap-3 text-zinc-400">
-
-                <Calendar
-                  size={15}
-                  className="text-[#4A6FA5]"
-                />
+                <Calendar size={15} className="text-[#4A6FA5]" />
 
                 <span>
-                  {new Date(
-                    resume.createdAt
-                  ).toLocaleDateString("en-IN", {
+                  {new Date(resume.createdAt).toLocaleDateString("en-IN", {
                     day: "numeric",
                     month: "short",
                     year: "numeric",
                   })}
                 </span>
-
               </div>
-
             </div>
 
             {/* Footer */}
 
             <div className="relative mt-6 flex items-center justify-between">
-
               <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
                 Parsed
               </span>
@@ -138,7 +125,6 @@ export default function ResumeList({ resumes, onSelect }) {
               <span className="text-sm text-[#4A6FA5] opacity-0 transition-all group-hover:opacity-100">
                 View Resume →
               </span>
-
             </div>
           </motion.button>
         );

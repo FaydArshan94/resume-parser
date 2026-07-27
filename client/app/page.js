@@ -3,7 +3,12 @@ import { useState, useEffect } from "react";
 import UploadZone from "@/components/UploadZone";
 import ResultsView from "@/components/ResultsView";
 import ResumeList from "@/components/ResumeList";
-import { parseResume, getResumeById, getAllResumes } from "@/lib/api";
+import {
+  parseResume,
+  getResumeById,
+  getAllResumes,
+  deleteResume,
+} from "@/lib/api";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
@@ -143,6 +148,19 @@ export default function Home() {
     setSelectedFile(null);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await deleteResume(id);
+      const confirmed = window.confirm("Delete this resume permanently?");
+
+      if (!confirmed) return;
+
+      setPastResumes((prev) => prev.filter((resume) => resume._id !== id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0F1115] text-white">
       {/* Background Glow */}
@@ -268,6 +286,7 @@ export default function Home() {
                     <ResumeList
                       resumes={pastResumes}
                       onSelect={handleSelectPast}
+                      onDelete={handleDelete}
                     />
 
                     {pagination?.hasNextPage && (

@@ -25,3 +25,9 @@ export async function getAllResumes(page = 1, limit = 10) {
 
   return res.data;
 }
+
+
+export async function deleteResume(id) {
+  const res = await axios.delete(`${API_BASE}/resume/${id}`);
+  return res.data;
+}
