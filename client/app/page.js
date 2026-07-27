@@ -230,7 +230,7 @@ export default function Home() {
 
               {/* List / Empty State View Block */}
               <AnimatePresence mode="wait">
-                {pastResumes.length ? (
+                {pastResumes?.length ? (
                   <motion.div
                     key="list"
                     initial={{ opacity: 0, scale: 0.98 }}
