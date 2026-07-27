@@ -12,7 +12,6 @@ export const uploadResume = asyncHandler(async (req, res) => {
 
   const savedResume = await processResume(req.file);
 
-
   res.status(201).json({
     success: true,
     message: "Resume parsed successfully",
@@ -49,18 +48,41 @@ export const getResumeById = async (req, res) => {
 
 export const getAllResumes = async (req, res) => {
   try {
-    const resumes = await Resume.find().sort({ createdAt: -1 }).lean();
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.min(20, Math.max(1, Number(req.query.limit) || 10));
 
-    return res.status(200).json({
+    const [resumes, total] = await Promise.all([
+      Resume.find()
+        .select(
+          "_id createdAt parsedData.personalInfo.fullName parsedData.profession.currentDesignation",
+        )
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .lean(),
+
+      Resume.countDocuments(),
+    ]);
+
+    return res.json({
       success: true,
       message: "Resumes fetched successfully",
-      data: resumes,
+      resumes,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+        hasNextPage: page < Math.ceil(total / limit),
+        hasPrevPage: page > 1,
+      },
     });
   } catch (error) {
     console.error("Error fetching resumes:", error);
+
     return res.status(500).json({
       success: false,
-      error: "Failed to fetch resumes",
+      message: "Failed to fetch resumes",
     });
   }
 };

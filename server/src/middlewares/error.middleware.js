@@ -25,6 +25,17 @@ const errorHandler = (err, req, res, next) => {
     }
   }
 
+  const isQuotaError =
+    status === 429 || err?.error?.status === "RESOURCE_EXHAUSTED";
+
+  if (isQuotaError) {
+    return res.status(429).json({
+      success: false,
+      message:
+        "The AI service has reached its usage limit. Please try again later.",
+    });
+  }
+
   const statusCode = err.statusCode || 500;
 
   res.status(statusCode).json({

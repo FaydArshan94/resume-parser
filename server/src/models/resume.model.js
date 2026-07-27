@@ -25,7 +25,9 @@ const ResumeSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
+
+ResumeSchema.index({ createdAt: -1 });
 
 export const Resume = mongoose.model("Resume", ResumeSchema);
