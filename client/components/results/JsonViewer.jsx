@@ -20,18 +20,32 @@ export default function JsonViewer({ data }) {
 
   return (
     <section className="mb-12">
-      <div className="rounded-3xl border border-white/10 bg-[#161B22] overflow-hidden">
+      <div
+        className="rounded-3xl overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(165deg, #171717 0%, #121212 45%, #0e0e0e 100%)",
+          border: "1px solid rgba(255,255,255,0.08)",
+        }}
+      >
         <button
           onClick={() => setOpen(!open)}
-          className="w-full flex items-center justify-between px-7 py-6 hover:bg-white/5 transition"
+          className="w-full flex items-center justify-between px-7 py-6 hover:bg-white/[0.03] transition"
         >
           <div className="flex items-center gap-4">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#4A6FA5]/15">
-              <Braces className="text-[#4A6FA5]" size={22} />
+            <div
+              className="flex h-11 w-11 items-center justify-center rounded-xl"
+              style={{
+                background: "linear-gradient(160deg, #2a2a2a, #131313)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                boxShadow: "inset 0 1px 1px rgba(255,255,255,0.15)",
+              }}
+            >
+              <Braces className="text-white/60" size={22} />
             </div>
 
             <div className="text-left">
-              <h2 className="text-lg font-semibold text-white">
+              <h2 className="text-lg font-semibold text-white tracking-[-0.01em]">
                 Developer Data
               </h2>
 
@@ -65,19 +79,31 @@ export default function JsonViewer({ data }) {
                   transition={{
                     duration: 0.3,
                   }}
-                  className="relative max-h-[550px] overflow-auto rounded-2xl border border-white/10 bg-[#0F1115] scrollbar-none"
+                  className="relative max-h-[550px] overflow-auto rounded-2xl scrollbar-none"
+                  style={{
+                    background: "#0a0a0a",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    boxShadow: "inset 0 2px 10px rgba(0,0,0,0.55)",
+                  }}
                 >
-                  <div className="sticky top-0 z-30 flex justify-end px-4 pt-4 pb-2 bg-[#0F1115]">
+                  <div className="sticky top-0 z-30 flex justify-end px-4 pt-4 pb-2 bg-[#0a0a0a]">
                     <button
                       onClick={handleCopy}
-                      className="group flex items-center gap-2 rounded-2xl border border-white/10 bg-[#161B22]/80 backdrop-blur-xl px-5 py-2 shadow-xl transition-all duration-300 hover:border-[#4A6FA5]/40 hover:bg-[#1C2129] hover:shadow-[#4A6FA5]/20 active:scale-95"
+                      className="group flex items-center gap-2 rounded-2xl px-5 py-2 transition-all duration-300 active:scale-95"
+                      style={{
+                        background:
+                          "linear-gradient(160deg, #2c2c2c, #151515)",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        boxShadow:
+                          "inset 0 1px 1px rgba(255,255,255,0.12), 0 4px 10px rgba(0,0,0,0.5)",
+                      }}
                     >
                       {copied ? (
                         <Check size={18} className="text-emerald-400" />
                       ) : (
                         <Copy
                           size={18}
-                          className="text-[#4A6FA5] group-hover:rotate-6 transition-transform"
+                          className="text-white/60 group-hover:rotate-6 transition-transform"
                         />
                       )}
                       <span className="text-sm text-white font-medium">

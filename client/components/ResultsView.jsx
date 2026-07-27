@@ -10,7 +10,7 @@ import JsonViewer from "./results/JsonViewer";
 import EducationCard from "./results/EducationCard";
 import CertificationsCard from "./results/CertificationsCard";
 
-export default function ResultsView({ data, onBack }) {
+export default function ResultsView({ data }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -30,15 +30,18 @@ export default function ResultsView({ data, onBack }) {
     achievements = [],
   } = data;
 
-
-
   return (
-    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 text-[#F5F3EE]">
+    <div
+      className="max-w-7xl mx-auto px-6 lg:px-8 py-12 text-white/85"
+      // style={{
+      //   background:
+      //     "radial-gradient(circle at 50% -10%, #1c1c1e 0%, #0a0a0a 45%, #050505 100%)",
+      // }}
+    >
       <CandidateHeader
         personalInfo={personalInfo}
         profession={data.profession}
         rawData={data}
-        onBack={onBack}
       />
 
       <InfoCards profession={data.profession} education={education} />
@@ -67,7 +70,9 @@ export default function ResultsView({ data, onBack }) {
 function Section({ title, children }) {
   return (
     <div className="mb-8">
-      <h2 className="font-serif text-xl mb-3 text-[#F5F3EE]">{title}</h2>
+      <h2 className="text-xl font-semibold mb-3 text-white tracking-[-0.01em]">
+        {title}
+      </h2>
       {children}
     </div>
   );

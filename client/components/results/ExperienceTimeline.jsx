@@ -10,14 +10,30 @@ export default function ExperienceTimeline({ experience = [] }) {
   return (
     <FadeInSection>
       <section className="mb-10">
-        <div className="rounded-3xl border border-white/10 bg-[#161B22] p-7 shadow-lg">
+        <div
+          className="rounded-3xl p-7"
+          style={{
+            background:
+              "linear-gradient(165deg, #171717 0%, #121212 45%, #0e0e0e 100%)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow:
+              "0 20px 40px -16px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05)",
+          }}
+        >
           <div className="flex items-center gap-3 mb-8">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#4A6FA5]/15">
-              <BriefcaseBusiness size={22} className="text-[#4A6FA5]" />
+            <div
+              className="flex h-11 w-11 items-center justify-center rounded-xl"
+              style={{
+                background: "linear-gradient(160deg, #2a2a2a, #131313)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                boxShadow: "inset 0 1px 1px rgba(255,255,255,0.15)",
+              }}
+            >
+              <BriefcaseBusiness size={22} className="text-white/60" />
             </div>
 
             <div>
-              <h2 className="text-lg font-semibold text-white">
+              <h2 className="text-lg font-semibold text-white tracking-[-0.01em]">
                 Work Experience
               </h2>
 
@@ -45,12 +61,25 @@ export default function ExperienceTimeline({ experience = [] }) {
 
                 {/* Timeline dot */}
 
-                <div className="absolute left-0 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#4A6FA5] ring-4 ring-[#161B22]">
-                  <div className="h-2.5 w-2.5 rounded-full bg-white" />
+                <div
+                  className="absolute left-0 top-1 flex h-6 w-6 items-center justify-center rounded-full ring-4"
+                  style={{
+                    background: "linear-gradient(160deg, #3a3a3a, #1a1a1a)",
+                    boxShadow: "inset 0 1px 1px rgba(255,255,255,0.2)",
+                    "--tw-ring-color": "#121212",
+                  }}
+                >
+                  <div className="h-2.5 w-2.5 rounded-full bg-white/80" />
                 </div>
 
-                <div className="rounded-2xl border border-white/10 bg-[#1C2129] p-5 transition-all duration-300 hover:border-[#4A6FA5]/40 hover:bg-[#202632]">
-                  <h3 className="text-lg font-semibold text-white">
+                <div
+                  className="rounded-2xl p-5 transition-all duration-300"
+                  style={{
+                    background: "linear-gradient(165deg, #1c1c1c, #141414)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                  }}
+                >
+                  <h3 className="text-lg font-semibold text-white tracking-[-0.01em]">
                     {job.designation || "Position"}
                   </h3>
 
@@ -87,7 +116,11 @@ export default function ExperienceTimeline({ experience = [] }) {
                       {job.skillsUsed.map((skill, idx) => (
                         <span
                           key={idx}
-                          className="rounded-lg bg-[#4A6FA5]/10 border border-[#4A6FA5]/20 px-3 py-1 text-xs text-[#8CB8FF]"
+                          className="rounded-lg px-3 py-1 text-xs text-zinc-300"
+                          style={{
+                            background: "rgba(255,255,255,0.05)",
+                            border: "1px solid rgba(255,255,255,0.1)",
+                          }}
                         >
                           {skill}
                         </span>

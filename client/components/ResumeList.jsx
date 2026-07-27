@@ -31,7 +31,14 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
   return (
     <div>
       {/* Search bar */}
-      <div className="mb-6 flex items-center gap-3 rounded-2xl border border-white/10 bg-[#171C23] px-4 py-3 focus-within:border-[#4A6FA5]/50 transition-colors">
+      <div
+        className="mb-6 flex items-center gap-3 rounded-2xl px-4 py-3 transition-colors"
+        style={{
+          background: "linear-gradient(180deg, #1c1c1c, #161616)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          boxShadow: "inset 0 2px 6px rgba(0,0,0,0.5)",
+        }}
+      >
         <Search size={16} className="text-zinc-500 shrink-0" />
         <input
           value={query}
@@ -56,7 +63,14 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
       )}
 
       {filteredResumes.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-white/10 bg-[#161B22]/50 p-12 text-center">
+        <div
+          className="rounded-3xl border border-dashed border-white/[0.12] p-12 text-center"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25))",
+            boxShadow: "inset 0 2px 10px rgba(0,0,0,0.55)",
+          }}
+        >
           <p className="text-zinc-400">No candidates match "{query}".</p>
         </div>
       ) : (
@@ -79,38 +93,35 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
               y: -5,
             }}
             onClick={() => onSelect(resume._id)}
-            className="
-              group
-              relative
-              overflow-hidden
-              rounded-3xl
-              border
-              border-white/10
-              bg-[#171C23]
-              p-6
-              text-left
-              transition-all
-              duration-300
-              hover:border-[#4A6FA5]/40
-              hover:bg-[#1B212A]
-              hover:shadow-2xl
-              hover:shadow-[#4A6FA5]/10
-            "
+            className="group relative overflow-hidden rounded-3xl p-6 text-left transition-all duration-300 hover:shadow-2xl hover:shadow-black/40"
+            style={{
+              background:
+                "linear-gradient(165deg, #171717 0%, #121212 45%, #0e0e0e 100%)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)",
+            }}
           >
             {/* Glow */}
 
-            <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br from-[#4A6FA5]/5 to-transparent" />
+            <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br from-white/[0.04] to-transparent" />
 
             {/* Header */}
 
             <div className="relative flex items-start justify-between">
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#4A6FA5]/15 text-[#4A6FA5]">
+                <div
+                  className="flex h-12 w-12 items-center justify-center rounded-2xl text-white/70"
+                  style={{
+                    background: "linear-gradient(160deg, #2a2a2a, #131313)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    boxShadow: "inset 0 1px 1px rgba(255,255,255,0.15)",
+                  }}
+                >
                   <User size={22} />
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-white text-lg line-clamp-1">
+                  <h3 className="font-semibold text-white text-lg line-clamp-1 tracking-[-0.01em]">
                     {person.fullName || "Unknown Candidate"}
                   </h3>
 
@@ -131,7 +142,7 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
                   <Trash2 size={16} />
                 </button>
 
-                <div className="p-2 rounded-lg text-zinc-500 hover:bg-blue-500/10 hover:text-blue-500 transition">
+                <div className="p-2 rounded-lg text-zinc-500 group-hover:text-white/70 transition">
                   <ArrowUpRight
                     size={18}
                     className=""
@@ -142,13 +153,13 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
 
             {/* Divider */}
 
-            <div className="my-5 h-px bg-white/10" />
+            <div className="my-5 h-px bg-white/[0.08]" />
 
             {/* Info */}
 
             <div className="relative space-y-3 text-sm">
               <div className="flex items-center gap-3 text-zinc-400">
-                <Briefcase size={15} className="text-[#4A6FA5]" />
+                <Briefcase size={15} className="text-white/50" />
 
                 <span className="truncate">
                   {profession.targetRole ||
@@ -158,7 +169,7 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
               </div>
 
               <div className="flex items-center gap-3 text-zinc-400">
-                <Calendar size={15} className="text-[#4A6FA5]" />
+                <Calendar size={15} className="text-white/50" />
 
                 <span>
                   {new Date(resume.createdAt).toLocaleDateString("en-IN", {
@@ -177,7 +188,7 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
                 Parsed
               </span>
 
-              <span className="text-sm text-[#4A6FA5] opacity-0 transition-all group-hover:opacity-100">
+              <span className="text-sm text-white/70 opacity-0 transition-all group-hover:opacity-100">
                 View Resume →
               </span>
             </div>

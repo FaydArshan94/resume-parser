@@ -43,45 +43,40 @@ export default function ProcessingBar({ currentStep }) {
   const Icon = step.icon;
 
   return (
-    <div className="w-full max-w-md mt-6 rounded-xl border border-[#4A6FA5]/25 bg-[#161B22] p-4 animate-in fade-in duration-300">
-
+    <div
+      className="w-full max-w-md mt-6 rounded-xl p-4 animate-in fade-in duration-300"
+      style={{
+        background: "linear-gradient(180deg, #1c1c1c, #151515)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        boxShadow: "inset 0 2px 6px rgba(0,0,0,0.5)",
+      }}
+    >
       <div className="flex items-center gap-3">
-
         {currentStep === steps.length - 1 ? (
-          <CheckCircle2 className="w-5 h-5 text-green-400" />
+          <CheckCircle2 className="w-5 h-5 text-emerald-400" />
         ) : (
-          <LoaderCircle className="w-5 h-5 text-[#4A6FA5] animate-spin" />
+          <LoaderCircle className="w-5 h-5 text-white/60 animate-spin" />
         )}
 
         <div className="flex-1">
-
           <div className="flex justify-between items-center">
+            <p className="text-sm text-white/85 font-medium">{step.label}</p>
 
-            <p className="text-sm text-[#F5F3EE] font-medium">
-              {step.label}
-            </p>
-
-            <span className="text-xs text-[#8B7355]">
-              {step.progress}%
-            </span>
-
+            <span className="text-xs text-zinc-500">{step.progress}%</span>
           </div>
 
-          <div className="mt-3 h-2 rounded-full bg-[#2A2F38] overflow-hidden">
-
+          <div className="mt-3 h-2 rounded-full bg-black/40 overflow-hidden">
             <div
-              className="h-full rounded-full bg-linear-to-r from-[#4A6FA5] to-cyan-400 transition-all duration-700"
+              className="h-full rounded-full transition-all duration-700"
               style={{
                 width: `${step.progress}%`,
+                background: "linear-gradient(90deg, #999, #fff)",
+                boxShadow: "0 0 6px rgba(255,255,255,0.5)",
               }}
             />
-
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 }

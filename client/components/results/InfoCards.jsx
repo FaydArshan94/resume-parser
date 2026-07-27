@@ -16,22 +16,36 @@ export default function InfoCards({
 }) {
   const latestEducation = education[education.length - 1];
 
+  const cardStyle = {
+    background:
+      "linear-gradient(165deg, #171717 0%, #121212 45%, #0e0e0e 100%)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    boxShadow:
+      "0 20px 40px -16px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05)",
+  };
+
+  const iconChipStyle = {
+    background: "linear-gradient(160deg, #2a2a2a, #131313)",
+    border: "1px solid rgba(255,255,255,0.1)",
+    boxShadow: "inset 0 1px 1px rgba(255,255,255,0.15)",
+  };
+
   return (
    <FadeInSection >
      <section className="grid gap-6 lg:grid-cols-2 mb-10">
 
       {/* Profession */}
 
-      <div className="rounded-3xl border border-white/10 bg-[#161B22] p-6 shadow-lg">
+      <div className="rounded-3xl p-6" style={cardStyle}>
 
         <div className="flex items-center gap-3 mb-6">
 
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#4A6FA5]/15">
-            <BriefcaseBusiness className="text-[#4A6FA5]" size={22} />
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl" style={iconChipStyle}>
+            <BriefcaseBusiness className="text-white/60" size={22} />
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold text-white">
+            <h2 className="text-lg font-semibold text-white tracking-[-0.01em]">
               Professional Profile
             </h2>
 
@@ -74,16 +88,16 @@ export default function InfoCards({
 
       {/* Education */}
 
-      <div className="rounded-3xl border border-white/10 bg-[#161B22] p-6 shadow-lg">
+      <div className="rounded-3xl p-6" style={cardStyle}>
 
         <div className="flex items-center gap-3 mb-6">
 
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#4A6FA5]/15">
-            <GraduationCap className="text-[#4A6FA5]" size={22} />
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl" style={iconChipStyle}>
+            <GraduationCap className="text-white/60" size={22} />
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold text-white">
+            <h2 className="text-lg font-semibold text-white tracking-[-0.01em]">
               Education
             </h2>
 
@@ -135,7 +149,7 @@ function Item({ icon, label, value }) {
   return (
     <div className="flex items-start gap-4">
 
-      <div className="mt-1 text-[#4A6FA5]">
+      <div className="mt-1 text-white/50">
         {icon}
       </div>
 

@@ -11,7 +11,7 @@ const ACCEPTED_TYPES = [
 export default function UploadZone({ onParse, status, error, currentStep }) {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
-  const [localError, setLocalError] = useState(null);
+  const [localError, setLocalError] = useState(null);s
   const inputRef = useRef(null);
 
   const isValidFile = (f) => f && ACCEPTED_TYPES.includes(f.type);
@@ -77,23 +77,23 @@ export default function UploadZone({ onParse, status, error, currentStep }) {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onClick={() => !file && inputRef.current?.click()}
-        className={`
-        relative
-        rounded-3xl
-        border-2
-        border-dashed
-        transition-all
-        duration-300
-        p-10
-
-        ${!file ? "cursor-pointer" : ""}
-
-        ${
+        className={`relative rounded-3xl border-2 border-dashed transition-all duration-300 p-10 ${
+          !file ? "cursor-pointer" : ""
+        }`}
+        style={
           dragActive
-            ? "border-[#4A6FA5] bg-[#4A6FA5]/10 scale-[1.01]"
-            : "border-white/10 hover:border-[#4A6FA5]/40 hover:bg-white/[0.02]"
+            ? {
+                borderColor: "rgba(255,255,255,0.35)",
+                background:
+                  "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2))",
+                transform: "scale(1.01)",
+              }
+            : {
+                borderColor: "rgba(255,255,255,0.12)",
+                background:
+                  "linear-gradient(180deg, rgba(255,255,255,0.015), rgba(0,0,0,0.15))",
+              }
         }
-      `}
       >
         <input
           ref={inputRef}
@@ -105,10 +105,24 @@ export default function UploadZone({ onParse, status, error, currentStep }) {
 
         {file ? (
           <div className="space-y-6">
-            <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-[#1C2129] p-5">
+            <div
+              className="flex items-center justify-between rounded-2xl p-5"
+              style={{
+                background: "linear-gradient(180deg, #1c1c1c, #151515)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                boxShadow: "inset 0 2px 6px rgba(0,0,0,0.5)",
+              }}
+            >
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#4A6FA5]/15">
-                  <FileText size={24} className="text-[#4A6FA5]" />
+                <div
+                  className="flex h-12 w-12 items-center justify-center rounded-xl"
+                  style={{
+                    background: "linear-gradient(160deg, #2a2a2a, #131313)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    boxShadow: "inset 0 1px 1px rgba(255,255,255,0.15)",
+                  }}
+                >
+                  <FileText size={24} className="text-white/60" />
                 </div>
 
                 <div>
@@ -144,11 +158,19 @@ export default function UploadZone({ onParse, status, error, currentStep }) {
           </div>
         ) : (
           <div className="flex flex-col items-center text-center">
-            <div className="mb-8 flex h-20 w-20 items-center justify-center rounded-3xl bg-[#4A6FA5]/10">
-              <UploadCloud size={38} className="text-[#4A6FA5]" />
+            <div
+              className="mb-8 flex h-20 w-20 items-center justify-center rounded-3xl"
+              style={{
+                background: "linear-gradient(160deg, #2c2c2c, #141414)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                boxShadow:
+                  "inset 0 1px 1px rgba(255,255,255,0.15), 0 4px 10px rgba(0,0,0,0.5)",
+              }}
+            >
+              <UploadCloud size={38} className="text-white/60" />
             </div>
 
-            <h2 className="text-2xl font-semibold text-white">
+            <h2 className="text-2xl font-semibold text-white tracking-[-0.01em]">
               Drop your resume here
             </h2>
 
@@ -189,25 +211,13 @@ export default function UploadZone({ onParse, status, error, currentStep }) {
       <button
         onClick={handleSubmit}
         disabled={!file || status === "loading"}
-        className="
-        mt-8
-        w-full
-        rounded-2xl
-        bg-[#4A6FA5]
-        py-4
-        text-base
-        font-semibold
-        text-white
-        transition-all
-        duration-300
-        hover:-translate-y-0.5
-        hover:bg-[#5B82BD]
-        hover:shadow-xl
-        hover:shadow-[#4A6FA5]/30
-        active:scale-[0.98]
-        disabled:cursor-not-allowed
-        disabled:opacity-50
-      "
+        className="mt-8 w-full rounded-2xl py-4 text-base font-semibold transition-transform duration-200 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
+        style={{
+          background: "linear-gradient(180deg, #ffffff, #d8d8d8)",
+          color: "#000",
+          boxShadow:
+            "0 6px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.9)",
+        }}
       >
         {status === "loading" ? "Processing Resume..." : "Parse Resume"}
       </button>
@@ -217,7 +227,13 @@ export default function UploadZone({ onParse, status, error, currentStep }) {
 
 function Badge({ text }) {
   return (
-    <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-zinc-300">
+    <div
+      className="rounded-full px-3 py-1.5 text-xs text-zinc-300"
+      style={{
+        background: "linear-gradient(160deg, #262626, #131313)",
+        border: "1px solid rgba(255,255,255,0.09)",
+      }}
+    >
       {text}
     </div>
   );
@@ -225,7 +241,14 @@ function Badge({ text }) {
 
 function StatCard({ title, value, success }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#1C2129] p-4">
+    <div
+      className="rounded-2xl p-4"
+      style={{
+        background: "linear-gradient(165deg, #1c1c1c, #141414)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        boxShadow: "inset 0 1px 1px rgba(255,255,255,0.06)",
+      }}
+    >
       <p className="text-xs uppercase tracking-wider text-zinc-500">{title}</p>
 
       <p

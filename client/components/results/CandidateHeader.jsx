@@ -33,37 +33,37 @@ export default function CandidateHeader({
   return (
     <FadeInSection >
       <header className="mb-10 ">
-        <div className="flex  items-center justify-between mb-8">
-          <button
-            onClick={onBack}
-            className="flex items-center  gap-2 text-sm text-zinc-400 hover:text-white transition"
-          >
-            <ArrowLeft size={18} />
-            Back
-          </button>
-
-          {/* <button
-          onClick={handleCopy}
-          className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 hover:border-[#4A6FA5]/60 hover:bg-[#4A6FA5]/10 transition"
+        
+        <div
+          className="rounded-3xl p-8"
+          style={{
+            background:
+              "linear-gradient(165deg, #171717 0%, #121212 45%, #0e0e0e 100%)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow:
+              "0 20px 40px -16px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05)",
+          }}
         >
-          {copied ? <Check size={16} /> : <Copy size={16} />}
-          {copied ? "Copied" : "Copy JSON"}
-        </button> */}
-        </div>
-
-        <div className="rounded-3xl border border-white/10 bg-[#161B22] p-8 shadow-xl">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center">
             <div className="flex items-center gap-6">
-              <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-[#4A6FA5] to-cyan-500 text-3xl font-bold text-white shadow-lg">
+              <div
+                className="flex h-24 w-24 items-center justify-center rounded-3xl text-3xl font-bold text-white"
+                style={{
+                  background: "linear-gradient(160deg, #2c2c2c, #131313)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  boxShadow:
+                    "inset 0 1px 1px rgba(255,255,255,0.15), 0 8px 20px rgba(0,0,0,0.5)",
+                }}
+              >
                 {initials}
               </div>
 
               <div>
-                <h1 className="text-4xl font-bold tracking-tight text-white">
+                <h1 className="text-4xl font-bold tracking-[-0.02em] text-white">
                   {personalInfo.fullName || "Unnamed Candidate"}
                 </h1>
 
-                <p className="mt-2 text-lg text-[#4A6FA5]">
+                <p className="mt-2 text-lg text-white/50">
                   {profession.currentDesignation ||
                     profession.targetRole ||
                     "Professional"}
@@ -126,8 +126,15 @@ export default function CandidateHeader({
 
 function Info({ icon, value }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-[#1C2129] px-4 py-3">
-      <div className="text-[#4A6FA5]">{icon}</div>
+    <div
+      className="flex items-center gap-3 rounded-2xl px-4 py-3"
+      style={{
+        background: "linear-gradient(165deg, #1c1c1c, #141414)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        boxShadow: "inset 0 1px 1px rgba(255,255,255,0.06)",
+      }}
+    >
+      <div className="text-white/50">{icon}</div>
 
       <span className="truncate text-sm text-zinc-300">{value}</span>
     </div>
@@ -140,9 +147,14 @@ function LinkInfo({ icon, value, href }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-3 rounded-2xl border border-white/10 bg-[#1C2129] px-4 py-3 transition hover:border-[#4A6FA5]/40 hover:bg-[#222834]"
+      className="flex items-center gap-3 rounded-2xl px-4 py-3 transition-colors"
+      style={{
+        background: "linear-gradient(165deg, #1c1c1c, #141414)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        boxShadow: "inset 0 1px 1px rgba(255,255,255,0.06)",
+      }}
     >
-      <div className="text-[#4A6FA5]">{icon}</div>
+      <div className="text-white/50">{icon}</div>
 
       <span className="text-sm text-zinc-300">{value}</span>
     </a>

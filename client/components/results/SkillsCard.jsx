@@ -14,30 +14,34 @@ export default function SkillsCard({ skills = [] }) {
     return cleanA.localeCompare(cleanB);
   });
 
-  // 2. Group skills by their first letter
-  // const groupedSkills = sortedSkills.reduce((acc, skill) => {
-  //   // Strip special characters like quotes for safe letter grouping
-  //   const firstLetter = skill
-  //     .replace(/[^a-zA-Z]/g, "")
-  //     .charAt(0)
-  //     .toUpperCase();
-  //   const key = firstLetter || "#"; // Fallback for items starting with symbols only
-  //   if (!acc[key]) acc[key] = [];
-  //   acc[key].push(skill);
-  //   return acc;
-  // }, {});
 
   return (
     <FadeInSection>
       <section className="mb-10">
-        <div className="rounded-3xl border border-white/10 bg-[#161B22] p-7 shadow-lg">
+        <div
+          className="rounded-3xl p-7"
+          style={{
+            background:
+              "linear-gradient(165deg, #171717 0%, #121212 45%, #0e0e0e 100%)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow:
+              "0 20px 40px -16px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05)",
+          }}
+        >
           <div className="flex items-center gap-3 mb-6">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#4A6FA5]/15">
-              <Code2 size={22} className="text-[#4A6FA5]" />
+            <div
+              className="flex h-11 w-11 items-center justify-center rounded-xl"
+              style={{
+                background: "linear-gradient(160deg, #2a2a2a, #131313)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                boxShadow: "inset 0 1px 1px rgba(255,255,255,0.15)",
+              }}
+            >
+              <Code2 size={22} className="text-white/60" />
             </div>
 
             <div>
-              <h2 className="text-lg font-semibold text-white">
+              <h2 className="text-lg font-semibold text-white tracking-[-0.01em]">
                 Technical Skills
               </h2>
 
@@ -51,23 +55,11 @@ export default function SkillsCard({ skills = [] }) {
             {sortedSkills.map((skill, index) => (
               <motion.div
                 key={skill}
-                className="
-            rounded-xl
-            border
-            border-white/10
-            bg-[#1C2129]
-            px-4
-            py-2
-            text-sm
-            text-zinc-200
-            transition-all
-            duration-200
-            hover:border-[#4A6FA5]/50
-            hover:bg-[#232A35]
-            hover:-translate-y-1
-            hover:shadow-lg
-            hover:shadow-[#4A6FA5]/10
-          "
+                className="rounded-xl px-4 py-2 text-sm text-zinc-200 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/40"
+                style={{
+                  background: "linear-gradient(165deg, #1c1c1c, #141414)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}
                 initial={{
                   opacity: 0,
                   scale: 0.9,
