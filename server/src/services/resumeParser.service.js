@@ -1,6 +1,6 @@
 import ai from "../config/gemini.js";
 import { ResumeJsonSchema } from "../schemas/resume.schema.json.js";
-import { ResumeSchema } from "../validators/resume.schema.js";
+import { ResumeSchema } from "../validators/resume/resume.schema.js";
 import { normalizeResume } from "./resumeNormalize.service.js";
 
 export const parseResume = async (resumeText) => {
