@@ -9,7 +9,7 @@
       <img src="https://img.shields.io/badge/Node.js-Backend-green?logo=node.js&logoColor=white" alt="Node.js" />
     </a>
     <a href="https://expressjs.org/">
-      <img src="https://img.shields.io/badge/express.js-Backend-green?logo=node.js&logoColor=white" alt="express.js" />
+      <img src="https://img.shields.io/badge/Express.js-000000?logo=express&logoColor=white" alt="express.js" />
     </a>
     <a href="https://www.mongodb.com/">
       <img src="https://img.shields.io/badge/MongoDB-Database-47A248?logo=mongodb&logoColor=white" alt="MongoDB" />
