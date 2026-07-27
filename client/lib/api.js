@@ -18,7 +18,10 @@ export async function getResumeById(id) {
   return res.data.data;
 }
 
-export async function getAllResumes() {
-  const res = await axios.get(`${API_BASE}/resume`);
-  return res.data.data;
+export async function getAllResumes(page = 1, limit = 10) {
+  const res = await axios.get(`${API_BASE}/resume`, {
+    params: { page, limit },
+  });
+
+  return res.data;
 }

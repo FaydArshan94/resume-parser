@@ -15,6 +15,9 @@ export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState(null);
+  const [loadingMore, setLoadingMore] = useState(false);
   // Spring physics configurations for that "cute & smooth" bounce
   const springTransition = {
     type: "spring",
@@ -47,16 +50,38 @@ export default function Home() {
   };
 
   useEffect(() => {
-    loadResumeList();
+    loadResumeList(1);
   }, []);
 
-  const loadResumeList = async () => {
+  const handleLoadMore = () => {
+    if (!pagination?.hasNextPage) return;
+
+    const nextPage = page + 1;
+
+    setPage(nextPage);
+
+    loadResumeList(nextPage, true);
+  };
+
+  const loadResumeList = async (pageNumber = 1, append = false) => {
     try {
-      const {data} = await getAllResumes();
-      setPastResumes(data);
-      console.log(data)
+      if (append) {
+        setLoadingMore(true);
+      }
+
+      const data = await getAllResumes(pageNumber, 10);
+
+      setPagination(data.pagination);
+
+      if (append) {
+        setPastResumes((prev) => [...prev, ...data.resumes]);
+      } else {
+        setPastResumes(data.resumes);
+      }
     } catch (err) {
       console.error("Failed to load resume list:", err);
+    } finally {
+      setLoadingMore(false);
     }
   };
 
@@ -88,7 +113,8 @@ export default function Home() {
       setTimeout(() => {
         setResult(data.parsedData);
         setStatus("success");
-        loadResumeList();
+        setPage(1);
+        loadResumeList(1);
       }, 500);
     } catch (err) {
       stopProgress();
@@ -224,7 +250,7 @@ export default function Home() {
                     Total
                   </p>
                   <p className="mt-1 text-2xl font-bold text-white">
-                    {pastResumes?.length}
+                    {pastResumes.length} / {pagination?.total}
                   </p>
                 </motion.div>
               </div>
@@ -243,6 +269,25 @@ export default function Home() {
                       resumes={pastResumes}
                       onSelect={handleSelectPast}
                     />
+
+                    {pagination?.hasNextPage && (
+                      <div className="flex justify-center mt-8">
+                        <button
+                          onClick={handleLoadMore}
+                          disabled={loadingMore}
+                          className="group px-6 py-3 rounded-xl
+                          bg-[#1A1D23]
+                           border border-[#8B7355]/20
+                          text-[#F5F3EE]
+                          hover:border-[#4A6FA5]/60
+                          hover:bg-[#1F232B]
+                          transition-all duration-300
+                          disabled:opacity-50"
+                        >
+                          {loadingMore ? "Loading..." : "Load More"}
+                        </button>
+                      </div>
+                    )}
                   </motion.div>
                 ) : (
                   <motion.div
