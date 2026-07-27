@@ -53,7 +53,7 @@ export default function Error({ error, reset }) {
         <h1 className="text-xl font-semibold text-white tracking-[-0.01em] mb-3">
           Something went wrong
         </h1>
-        <p className="text-sm text-zinc-400 mb-8 leading-relaxed max-w-[280px]">
+        <p className="text-sm text-zinc-400 mb-8 leading-relaxed max-w-70">
           {error?.message ||
             "We encountered an unexpected issue while loading this page. Please try again."}
         </p>
