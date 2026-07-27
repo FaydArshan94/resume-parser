@@ -52,8 +52,9 @@ export default function Home() {
 
   const loadResumeList = async () => {
     try {
-      const data = await getAllResumes();
+      const {data} = await getAllResumes();
       setPastResumes(data);
+      console.log(data)
     } catch (err) {
       console.error("Failed to load resume list:", err);
     }

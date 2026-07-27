@@ -64,7 +64,7 @@ export const getAllResumes = async (req, res) => {
       Resume.countDocuments(),
     ]);
 
-    return res.json({
+    return res.status(200).json({
       success: true,
       message: "Resumes fetched successfully",
       resumes,
