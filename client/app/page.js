@@ -11,7 +11,7 @@ import {
   deleteAllResumes,
 } from "../lib/api";
 import { motion, AnimatePresence } from "framer-motion";
-import { Trash2 } from "lucide-react";
+import { FileText, Trash2 } from "lucide-react";
 import ConfirmModal from "../components/ui/ConfrimModal";
 import { ToastContainer } from "../components/ui/Toast";
 
@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const [error, setError] = useState(null);
   const [pastResumes, setPastResumes] = useState([]);
-  const [status, setStatus] = useState("idle")
+  const [status, setStatus] = useState("idle");
 
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -205,6 +205,8 @@ export default function Home() {
 
     setConfirmState(null);
   };
+
+  // throw new Error("Testing Error Page");
   return (
     <main
       className="relative min-h-screen overflow-hidden text-white"
@@ -414,18 +416,18 @@ export default function Home() {
                 </motion.div>
               ) : (
                 <motion.div
-                  key="empty"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={springTransition}
-                  className="rounded-3xl border border-dashed border-white/12 p-16 text-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex flex-col items-center justify-center rounded-3xl p-12 text-center w-full max-w-2xl mx-auto mt-10"
                   style={{
                     background:
-                      "linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25))",
-                    boxShadow: "inset 0 2px 10px rgba(0,0,0,0.55)",
+                      "linear-gradient(165deg, #171717 0%, #121212 45%, #0e0e0e 100%)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    boxShadow:
+                      "0 20px 40px -16px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05)",
                   }}
                 >
+                  {/* Floating Metallic Icon Container */}
                   <motion.div
                     animate={{ y: [0, -8, 0] }}
                     transition={{
@@ -433,16 +435,21 @@ export default function Home() {
                       duration: 3,
                       ease: "easeInOut",
                     }}
-                    className="mb-4 text-6xl"
+                    className="flex h-16 w-16 items-center justify-center rounded-2xl mb-6"
+                    style={{
+                      background: "linear-gradient(160deg, #2a2a2a, #131313)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      boxShadow: "inset 0 1px 1px rgba(255,255,255,0.15)",
+                    }}
                   >
-                    📄
+                    <FileText className="text-zinc-400" size={32} />
                   </motion.div>
 
-                  <h3 className="text-2xl font-semibold text-white">
+                  <h3 className="text-2xl font-semibold text-white tracking-[-0.01em]">
                     No resumes yet
                   </h3>
 
-                  <p className="mt-3 text-zinc-400">
+                  <p className="mt-3 text-zinc-400 text-sm max-w-sm">
                     Parse your first resume and it will appear here.
                   </p>
                 </motion.div>

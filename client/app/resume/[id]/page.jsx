@@ -29,11 +29,6 @@ export default function ResumeDetail({ params }) {
         router.replace("/not-found");
         return;
       }
-
-      console.error(err);
-
-      router.replace("/error");
-      return;
     } finally {
       setIsLoading(false);
     }
