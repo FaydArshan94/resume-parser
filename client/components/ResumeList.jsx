@@ -80,7 +80,7 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
         const profession = resume.parsedData?.profession || {};
 
         return (
-          <motion.button
+          <motion.div
             key={resume._id}
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -192,7 +192,7 @@ export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll })
                 View Resume →
               </span>
             </div>
-          </motion.button>
+          </motion.div>
         );
           })}
         </div>

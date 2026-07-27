@@ -1,4 +1,4 @@
-import { parseResume } from "./parser.service.js";
+import { parseResume } from "./resumeParser.service.js";
 import { extractFile } from "./textExtraction.service.js";
 import { Resume } from "../models/resume.model.js";
 
