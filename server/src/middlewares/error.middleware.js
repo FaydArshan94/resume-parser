@@ -26,7 +26,9 @@ const errorHandler = (err, req, res, next) => {
   }
 
   const isQuotaError =
-    status === 429 || err?.error?.status === "RESOURCE_EXHAUSTED";
+    err.status === 429 ||
+    err.statusCode === 429 ||
+    err?.error?.status === "RESOURCE_EXHAUSTED";
 
   if (isQuotaError) {
     return res.status(429).json({
