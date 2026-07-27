@@ -28,6 +28,11 @@ export async function getAllResumes(page = 1, limit = 10) {
 
 
 export async function deleteResume(id) {
-  const res = await axios.delete(`${API_BASE}/resume/${id}`);
+  const res = await axios.delete(`${API_BASE}/resume/delete/${id}`);
+  return res.data;
+}
+
+export async function deleteAllResumes() {
+  const res = await axios.delete(`${API_BASE}/resume/delete`);
   return res.data;
 }

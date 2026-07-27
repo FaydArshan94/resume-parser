@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Calendar, Briefcase, User, Trash2 } from "lucide-react";
 
-export default function ResumeList({ resumes, onSelect, onDelete }) {
+export default function ResumeList({ resumes, onSelect, onDelete, onDeleteAll }) {
   return (
     <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
       {resumes.map((resume, index) => {
@@ -69,7 +69,7 @@ export default function ResumeList({ resumes, onSelect, onDelete }) {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    onDelete(r._id);
+                    onDelete(resume._id);
                   }}
                   className="p-2 rounded-lg text-zinc-500 hover:bg-red-500/10 hover:text-red-300 transition"
                 >

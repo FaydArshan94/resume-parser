@@ -8,8 +8,10 @@ import {
   getResumeById,
   getAllResumes,
   deleteResume,
+  deleteAllResumes,
 } from "@/lib/api";
 import { motion, AnimatePresence } from "framer-motion";
+import { Trash2 } from "lucide-react";
 
 export default function Home() {
   const [status, setStatus] = useState("idle");
@@ -161,6 +163,30 @@ export default function Home() {
     }
   };
 
+  const handleDeleteAll = async () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete all resumes? This action cannot be undone.",
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await deleteAllResumes();
+
+      setPastResumes([]);
+      setPagination({
+        page: 1,
+        limit: 10,
+        total: 0,
+        totalPages: 0,
+        hasNextPage: false,
+        hasPrevPage: false,
+      });
+      setPage(1);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0F1115] text-white">
       {/* Background Glow */}
@@ -246,42 +272,67 @@ export default function Home() {
               transition={springTransition}
               className="mt-24"
             >
+              {/* ================= HEADER ================= */}
               <div className="mb-10 flex items-end justify-between">
                 <div>
                   <p className="text-sm uppercase tracking-[0.25em] text-[#4A6FA5]">
                     Candidate Database
                   </p>
+
                   <h2 className="mt-2 text-4xl font-bold text-white">
                     Recently Parsed Resumes
                   </h2>
+
                   <p className="mt-3 max-w-xl text-zinc-400">
                     Browse previously analyzed candidates without uploading the
                     resume again.
                   </p>
                 </div>
 
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="hidden rounded-2xl border border-white/10 bg-[#171C23] px-5 py-3 lg:block"
-                >
-                  <p className="text-xs uppercase tracking-wider text-zinc-500">
-                    Total
-                  </p>
-                  <p className="mt-1 text-2xl font-bold text-white">
-                    {pastResumes.length} / {pagination?.total}
-                  </p>
-                </motion.div>
+                <div className="flex items-end gap-4">
+                  {/* Delete All */}
+                  {pastResumes.length > 0 && (
+                    <motion.button
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.96 }}
+                      onClick={handleDeleteAll}
+                      className="flex items-center gap-2 rounded-xl
+                      border border-red-500/20
+                      bg-red-500/10
+                      px-5 py-3
+                      text-red-400
+                      hover:bg-red-500/20"
+                    >
+                      <Trash2 size={16} />
+                      Delete All
+                    </motion.button>
+                  )}
+
+                  {/* Stats */}
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="hidden rounded-2xl border border-white/10 bg-[#171C23] px-5 py-3 lg:block"
+                  >
+                    <p className="text-xs uppercase tracking-wider text-zinc-500">
+                      Total
+                    </p>
+
+                    <p className="mt-1 text-2xl font-bold text-white">
+                      {pastResumes.length} / {pagination?.total}
+                    </p>
+                  </motion.div>
+                </div>
               </div>
 
-              {/* List / Empty State View Block */}
+              {/* ================= CONTENT ================= */}
               <AnimatePresence mode="wait">
-                {pastResumes?.length ? (
+                {pastResumes.length > 0 ? (
                   <motion.div
                     key="list"
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.25 }}
                   >
                     <ResumeList
                       resumes={pastResumes}
@@ -290,18 +341,18 @@ export default function Home() {
                     />
 
                     {pagination?.hasNextPage && (
-                      <div className="flex justify-center mt-8">
+                      <div className="mt-8 flex justify-center">
                         <button
                           onClick={handleLoadMore}
                           disabled={loadingMore}
-                          className="group px-6 py-3 rounded-xl
-                          bg-[#1A1D23]
-                           border border-[#8B7355]/20
-                          text-[#F5F3EE]
-                          hover:border-[#4A6FA5]/60
-                          hover:bg-[#1F232B]
-                          transition-all duration-300
-                          disabled:opacity-50"
+                          className="rounded-xl border border-[#8B7355]/20
+                              bg-[#1A1D23]
+                              px-6 py-3
+                              text-[#F5F3EE]
+                              transition-all
+                              hover:border-[#4A6FA5]/60
+                              hover:bg-[#1F232B]
+                              disabled:opacity-50"
                         >
                           {loadingMore ? "Loading..." : "Load More"}
                         </button>
@@ -315,10 +366,8 @@ export default function Home() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={springTransition}
-                    whileHover={{ scale: 1.01 }}
-                    className="rounded-3xl border border-dashed border-white/10 bg-[#161B22]/50 p-16 text-center select-none"
+                    className="rounded-3xl border border-dashed border-white/10 bg-[#161B22]/50 p-16 text-center"
                   >
-                    {/* Cute floating icon animation */}
                     <motion.div
                       animate={{ y: [0, -8, 0] }}
                       transition={{
@@ -326,11 +375,15 @@ export default function Home() {
                         duration: 3,
                         ease: "easeInOut",
                       }}
-                      className="text-6xl mb-4"
+                      className="mb-4 text-6xl"
                     >
                       📄
                     </motion.div>
-                    <h3 className="text-2xl font-semibold">No resumes yet</h3>
+
+                    <h3 className="text-2xl font-semibold text-white">
+                      No resumes yet
+                    </h3>
+
                     <p className="mt-3 text-zinc-400">
                       Parse your first resume and it will appear here.
                     </p>
