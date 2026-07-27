@@ -11,7 +11,7 @@ const ACCEPTED_TYPES = [
 export default function UploadZone({ onParse, status, error, currentStep }) {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
-  const [localError, setLocalError] = useState(null);s
+  const [localError, setLocalError] = useState(null);
   const inputRef = useRef(null);
 
   const isValidFile = (f) => f && ACCEPTED_TYPES.includes(f.type);
