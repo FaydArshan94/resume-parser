@@ -10,6 +10,9 @@ import { apiLimiter } from "./middlewares/rateLimiter.js";
 
 const app = express();
 
+// FIX: Trust Vercel's proxy so rateLimiter can read the real user IP
+app.set("trust proxy", 1);
+
 // Hide Express signature
 app.disable("x-powered-by");
 
